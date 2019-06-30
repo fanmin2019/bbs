@@ -1,0 +1,176 @@
+{#blog_detail.html#}
+{% extends "topic/base.html" %}
+{% block title %}{{ blog.title }}{% endblock%}
+{% block main %}
+<div id="main">
+    <div id="sidebar">
+  <div class="panel">
+    <div class="header">
+      <span class="col_fade">作者</span>
+    </div>
+    <div class="inner">
+      <div class="user_card">
+  <div>
+    <a class="user_avatar" href="/user/{{ user.id }}">
+      <img src="{{ user.image }}" title="{{ user.username }}">
+    </a>
+    <span class="user_name"><a class="dark" href="/user/{{ user.id }}">{{ user.username }}</a></span>
+
+    <div class="board clearfix">
+      <div class="floor">
+        <span class="big">积分: 1255 </span>
+      </div>
+    </div>
+    <div class="space clearfix"></div>
+    <span class="signature">
+        “
+
+             这家伙很懒，什么个性签名都没有留下
+
+        ”
+    </span>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+    <div id="content">
+        <div class='panel'>
+            <div class='header topic_header'>
+                <span class="topic_full_title">
+                    {{ blog.title }}
+                </span>
+                <div class="changes">
+                    <span>
+                        发布于 {{ time }} 天前
+                    </span>
+                    <span>
+{#                        {% set u = blog.user() %}#}
+                        作者 {{ user.username }}
+                	</span>
+{#                    <span>#}
+{#                  	    {{ topic.views }} 次浏览#}
+{#        	        </span>#}
+                </div>{#div for changes#}
+            </div>{#div for topic_header#}
+            <div class='header topic_header'>
+                    <input class="span-primary submit_btn" type="button" id="id-edit-btn" value="编辑">
+                    <input class="span-primary submit_btn" type="button" id="id-delete-btn" value="删除">
+            </div>
+            <div class='inner topic'>
+                <div class='topic_content'>
+                    <div id="id-markdown-text" class="markdown-text">
+                        {{ blog.content}}
+                    </div>
+                    <form class="pure-form pure-form-stacked"  action="{{ url_for('blog.update') }}" method="post">
+                        <textarea id="id-edit-text" style="display: none; margin: 0px 17px 10px 0px; width: 919px; height: 450px;" class="blog-update-title" cols="300" rows="50" name="content">{{ blog.content }}</textarea>
+                        <input type="hidden" name="id" value="{{ blog.id  }}">
+                        <input style="display: none" class="span-primary submit_btn" id="id-update-btn" type="submit" value="更新">
+                    </form>
+                </div>
+            </div>{#div for inner topic#}
+
+        </div>{#div for panel#}
+        <div class='panel'>
+{#        <div class="blog-update-form blog-hidden">#}
+{#            <form class="pure-form pure-form-stacked"  action="{{ url_for('blog.update') }}" method="post">#}
+{#                <textarea style="display: none" class="blog-update-title" cols="30" rows="5" name="content">AAVVVV</textarea>#}
+{#                <textarea style="display: none" class="blog-update-title" cols="30" rows="5" name="content">{{ blog.content }}</textarea>#}
+{#                <input type="hidden" name="id" value="{{ blog.id  }}">#}
+{#                <input style="display: none" class="span-primary submit_btn" id="id-update-btn" type="submit" value="更新">#}
+{#            </form>#}
+{#        </div>#}
+        <div class='header'>
+            <span class='col_fade'>
+                <!-- 过滤器 -->
+                {{ comments | count }} 评论
+            </span>
+        </div>
+        <div id="id-blog-comment" data-id="{{ blog.id }}">
+            <form class="pure-form pure-form-stacked"  action="{{ url_for('blog.comment_add', token=token) }}" method="post">
+                <textarea name="content" id="" cols="400" rows="2" style="margin: 0px 0px 5px; width: 980px; height: 60px;"></textarea>
+                <input type="hidden" name="blog_id" value="{{ blog.id  }}">
+{#                <button type="submit">添加评论</button>#}
+                <input class="span-primary submit_btn" id="id-update-btn" type="submit" value="添加评论">
+            </form>
+        {% for c in comments %}
+{#            {% set u = user %}#}
+            <div class='cell reply_area reply_item'>
+                <div class='author_content'>
+                    <div class='user_info'>
+                        <a class='user_avatar' href="/profile?username={{ user.username }}">
+                            <img src="{{ user.image }}" title="{{ user.username }}"/>
+                        </a>
+                        <a class='dark reply_author'>
+                            {{ user.username }}
+                        </a>
+                        <a class="reply_time">
+                            {{ loop.index }}楼 / {{ loop.length }}楼 •
+                            <span class="min-time" id="{{ c.ct }}"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class='reply_content from-leiwei1991'>
+                    <div class="markdown-text">{{ c.content }}</div>
+
+                </div>
+            </div>
+{#        {% endfor %}
+#}
+{#                {% for c in comments %}#}
+{#                    <div class="blog-comment-cell">#}
+{#                        评论内容：<div class="blog-comment-content">{{ c.content }}</div>#}
+{#                        作者:<span>{{ c.user_name }}</span>#}
+{#                        <button data-id="{{ c.id }}" class="blog-comment-delete">删除</button>#}
+{#                    </div>#}
+        {% endfor %}
+        </div>
+    </div>
+    </div>{#div for content#}
+</div>{#div for main#}
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/prism.css">
+<script src="https://cdn.bootcss.com/marked/0.3.19/marked.min.js"></script>
+<script src="https://cdn.bootcss.com/prism/1.13.0/prism.js"></script>
+<script src="https://cdn.bootcss.com/prism/1.13.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="/static/js/blog.js"></script>
+<script>
+    var e = function (sel) {
+        return document.querySelector(sel)
+    }
+
+    var es = function (sel) {
+        return document.querySelectorAll(sel)
+    }
+
+    var markContents = function () {
+        // markdown -> html 的处理放在高亮前面
+        // 因为高亮是针对 html 格式的
+        // lang -> language 不需要转 prism 自动转了
+        var contentDivs = es('.markdown-text')
+        for (var i = 0; i < contentDivs.length; i++) {
+            var contentDiv = contentDivs[i]
+            console.log('pre marked', contentDiv.textContent)
+            var content = marked(contentDiv.textContent)
+            console.log('after marked', content)
+            contentDiv.innerHTML = content
+        }
+    }
+
+    var highlight = function() {
+         // 自动加载对应的语言 不然要手动加入各个语言的 js
+        Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/'
+    }
+
+    var __main = function () {
+        markContents()
+        highlight()
+    }
+
+    __main()
+
+</script>
+
+{% endblock %}

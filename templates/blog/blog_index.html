@@ -1,0 +1,45 @@
+{% extends "topic/base.html" %}
+{% block title %}博客{% endblock%}
+{% block main %}
+{#    <a href="{{ url_for('blog.new') }}">发表新博客</a>#}
+{#    {% for b in blogs %}#}
+{#    <p>#}
+{#        <a href="{{ url_for('blog.detail', id=b.id) }} ">{{ b.title }} from {{ b.user_name }}</a>#}
+{#    </p>#}
+{#    {% endfor %}#}
+    <div id="main">
+        <div id="sidebar">
+            <div class="panel">
+                <div class="inner">
+                    <a href="/blog/new" class="create_topic_btn">
+                        <span class="span-success">新建博客</span>
+                    </a>
+                </div>  {#for inner#}
+            </div>  {#for panel#}
+        </div>  {#for sidebar#}
+        <div id="content">
+            <div class="panel">
+                <div class="header">
+                    <a href="/topic"
+                       class="topic-tab current-tab">
+                        全部的博客
+                    </a>
+                </div>
+                <div class="inner post">
+                    <div class="topic_list">
+                        {% for b in blogs %}
+                            <div class="cell">
+                                <div class="topic_title_wrapper">
+                                    <a class="topic_title" href="{{ url_for('blog.detail', id=b.id) }}">
+                                         {{ b.title }} from {{ b.user_name }}
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                </div>{#for topic_list#}
+            </div>{#for inner#}
+
+            </div> {#for panel#}
+        </div> {#for content#}
+    </div>  {#for main#}
+{% endblock %}

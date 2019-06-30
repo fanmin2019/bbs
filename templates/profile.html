@@ -1,0 +1,163 @@
+{% extends "topic/base.html" %}
+{% block title %}@{{ user.username }}的个人主页{% endblock%}
+{% block main %}
+    <div id="main">
+         <div id="sidebar">
+             <div class="panel">
+                <div class="header">
+                    <span class="col_fade">个人信息</span>
+                </div>
+            <div class="inner">
+                <div class="user_card">
+                    <div>
+                        <a class="user_avatar" href="/profile?username={{ user.username }}">
+                          <img src="{{ user.image }}" title="{{ user.username }}">
+                        </a>
+                        <span class="user_name">
+                            <a class="dark" href="/profile?username={{ user.username }}">
+                                {{ user.username }}
+                            </a>
+                        </span>
+
+                        <div class="board clearfix">
+                          <div class="floor">
+                            <span class="big">积分: 0 </span>
+                          </div>
+                        </div>
+                        <div class="space clearfix"></div>
+                        <span class="signature">
+                            “
+
+                                这家伙很懒，什么个性签名都没有留下。
+
+                            ”
+                        </span>
+                      </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="inner">
+                <a href="/topic/new" id="create_topic_btn">
+                    <span class="span-success">发布话题</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+<div id="content">
+  <div class="panel">
+    <div class="header">
+      <ul class="breadcrumb">
+        <li><a href="/">主页</a><span class="divider">/</span></li>
+      </ul>
+    </div>
+    <div class="inner userinfo">
+      <div class="user_big_avatar">
+        <img src="{{ other.image }}" class="user_avatar" title="{{ other.username }}">
+      </div>
+      <a class="dark">{{ other.username }}</a>
+
+      <div class="user_profile">
+        <ul class="unstyled">
+          <span class="big">10</span> 积分
+        </ul>
+      </div>
+      <p class='col_fade'>注册时间 {{ time }} 小时前</p>
+
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="header">
+      <span class="col_fade">最近创建的话题</span>
+        {% for t in created %}
+            <a href="{{ url_for('topic.detail', id=t.id) }}">{{ t.title }}</a>
+        {% endfor %}
+
+    </div>
+
+    <div class="inner">
+      <p>无话题</p>
+    </div>
+
+  </div>
+
+  <div class="panel">
+    <div class="header">
+      <span class="col_fade">最近参与的话题</span>
+        {% for t in replied %}
+            <a href="{{ url_for('topic.detail', id=t.id) }}">{{ t.title }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="inner">
+      <p>无话题</p>
+    </div>
+
+  </div>
+
+    {% if other.id == user.id %}
+    <div class="panel">
+        <div class="header">
+          <span class="col_fade">头像管理</span>
+            <form method="post"
+              action="{{ url_for('.avatar_add')}}"
+              enctype="multipart/form-data">
+                <input type="file" name="avatar">
+                <button type="submit">上传头像</button>
+            </form>
+        </div>
+       {% endif %}
+
+
+
+  </div>
+</div>
+
+</div>
+{% endblock %}
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>profile</title>#}
+{#</head>#}
+{#<body>#}
+{#<h1>用户资料页面</h1>#}
+{#<div>#}
+{#    {{ user.id }}#}
+{#</div>#}
+{#<div>#}
+{#    {{ user.username }}#}
+{#</div>#}
+{##}
+{#<div>#}
+{#    <div>创建的</div>#}
+{#    {% for t in created %}#}
+{#        <a href="{{ url_for('topic.detail', id=t.id) }}">{{ t.title }}</a>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#<div>#}
+{#    <div>参与的</div>#}
+{#    {% for t in replied %}#}
+{#        <a href="{{ url_for('topic.detail', id=t.id) }}">{{ t.title }}</a>#}
+{#    {% endfor %}#}
+{#</div>#}
+{##}
+{#<form method="post"#}
+{#      action="{{ url_for('.avatar_add')}}"#}
+{#      enctype="multipart/form-data"#}
+{#>#}
+{#    <input type="file" name="avatar">#}
+{#    <button type="submit">上传头像</button>#}
+{#</form>#}
+{##}
+{#<img src="{{ user.image }} ">#}
+{##}
+{#</body>#}
+{#</html>#}
