@@ -8,4 +8,11 @@
     - 配有自定义的脚本,能够把程序自动部署到服务器上
 
 # 网站截图
+![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/login.png)
+![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/topic.png)
+![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/topic%20detail.png)
+![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/topic%20comment.png)
+![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/blog%20index.png)
+![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/blog%20detail.png)
+![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/blog%20detail%202.png)
 ![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/blog%20comment.png)
