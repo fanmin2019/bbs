@@ -16,4 +16,3 @@
 ![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/blog%20detail.png)
 ![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/blog%20detail%202.png)
 ![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/blog%20comment.png)
-![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/vagrant.png)
