@@ -13,8 +13,8 @@ from models.user import User
 
 def reset_database():
     # 现在 mysql root 默认用 socket 来验证而不是密码
-    uri = 'mysql+pymysql://root@127.0.0.1/?charset=utf8mb4&unix_socket=/var/run/mysqld/mysqld.sock'
-    # uri = 'mysql+pymysql://root:test@127.0.0.1'
+    # uri = 'mysql+pymysql://root@127.0.0.1/?charset=utf8mb4&unix_socket=/var/run/mysqld/mysqld.sock'
+    uri = 'mysql+pymysql://root:test@127.0.0.1'
     e = create_engine(uri, echo=True)
 
     with e.connect() as c:
