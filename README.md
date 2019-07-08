@@ -1,14 +1,15 @@
 # bbs
-- 基于Python/Flask的web软件
-- 网站演示地址: https://fan-min.com
-- 网站测试用户/密码：test/123
-- **具体功能**
-    - 用户登录/注册, 上传头像,发表主题/回复,发表博客/评论,邮件找回密码
-    - 针对CSRF攻击等常见网络攻击, 对特定的请求进行token的验证
-    - 获取CA，使网站https化，并且在http访问时强制跳转到到https模式
-    - 配有自定义的脚本,能够把程序自动部署到服务器上
+- Based on Python/Flask web application
+- Site url: https://fan-min.com
+- Test user/password: test/123
 
-- **网站截图**
+- **Application functions**
+    - User login/registration, uploading avatars, posting topics/replies, posting blog/comments, resetting own password by password
+    - Force token authentication of requests, to protect the site from usual network attacks such as XSS, CSRF attacks etc.
+    - Redirect the access from http url redirect to https url automatically
+    - With scripts for auto deployment of this web application
+    
+- **Screenshots**
 ![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/login.png)
 ![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/topic.png)
 ![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/topic%20detail.png)
