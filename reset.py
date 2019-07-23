@@ -9,6 +9,7 @@ from models.board import Board
 from models.reply import Reply
 from models.topic import Topic
 from models.user import User
+from models.language import Language
 
 
 def reset_database():
@@ -42,17 +43,17 @@ def generate_fake_date():
 
     boardList = []
     form = dict(
-        title='精华'
+        title='spin'
     )
     b = Board.new(form)
     boardList.append(b)
     form = dict(
-        title='问答'
+        title='qa'
     )
     b = Board.new(form)
     boardList.append(b)
     form = dict(
-        title='分享'
+        title='share'
     )
     b = Board.new(form)
     boardList.append(b)
@@ -62,7 +63,7 @@ def generate_fake_date():
     for i in range(10):
         print('begin topic <{}>'.format(i))
         topic_form = dict(
-            title='markdown demo' + boardList[i % 3].title,
+            title='markdown demo ' + boardList[i % 3].title,
             board_id=boardList[i % 3].id,
             content=content
         )
@@ -74,7 +75,6 @@ def generate_fake_date():
         )
         for j in range(5):
             Reply.new(reply_form, u.id)
-
 
 # for blog
     with open('markdown_demo.md', encoding='utf-8') as f:
