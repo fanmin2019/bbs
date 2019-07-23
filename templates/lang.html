@@ -1,0 +1,48 @@
+{% extends "topic/base.html" %}
+{% block title %}Set language{% endblock%}
+{% block main %}
+<div id="main">
+    <div id="content">
+        <div class="panel">
+            <div class="inner post">
+                <div class="topic_list">
+                    <table class="table">
+                        <tr><th>FiledName</th><th>Label</th><th>Language</th></tr>
+                    {% for t in ls %}
+                        <tr><td>{{ t.filedName }}</td><td>{{ t.labelName }}</td><td>{{ t.language }}</td></tr>
+                    {% endfor %}
+                    </table>
+                </div>
+                <div class="topic_list">
+                    <form class="pure-form pure-form-stacked"  action="{{ url_for('language.lang_add') }}" method="post">
+                        FiledName<input type="text" name="filedName">
+                        LabelName<input type="text" name="labelName">
+                        Language<input type="text" name="language">
+                        <input class="span-primary submit_btn" id="id-update-btn" type="submit" value="Add">
+                    </form>
+{#                    <table class="table">#}
+{#                        <tr><th>FiledName</th><th>Label</th><th>Language</th></tr>#}
+{#                        <tr>#}
+{#                            <td contenteditable="true" >filed</td>#}
+{#                            <td contenteditable="true">label</td>#}
+{#                            <td contenteditable="true">lang</td>#}
+{#                            <td>#}
+{#                                <span class="table-remove">#}
+{#                                    <button type="button" class="btn btn-primary btn-rounded btn-sm my-0" onclick="addLanguage()">#}
+{#                                    Add#}
+{#                                    </button>#}
+{#                                </span>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                    </table>#}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        var addLanguage = function () {
+            
+        }
+    </script>
+{% endblock %}

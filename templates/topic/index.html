@@ -9,20 +9,20 @@
 <!--<body>-->
 
 {% extends "topic/base.html" %}
-{% block title %}论坛主页{% endblock%}
+{% block title %}{{ tranlates["homepage"] }}{% endblock%}
 {% block main %}
 <div id="main">
     <div id="sidebar">
         <div class="panel">
             <div class="inner">
                 <a href="/topic/new?board_id={{ bid }}" class="create_topic_btn">
-                    <span class="span-success">发布话题</span>
+                    <span class="span-success">{{ tranlates["createTopic"] }}</span>
                 </a>
             </div>
         </div>
         <div class='panel'>
             <div class='header'>
-                <span class='col_fade'>个人信息</span>
+                <span class='col_fade'>{{ tranlates["profile"] }}</span>
             </div>
             <div class='inner'>
                 <div class='user_card'>
@@ -34,16 +34,12 @@
 
                         <div class='board clearfix'>
                             <div class='floor'>
-                                <span class='big'>积分: 0 </span>
+                                <span class='big'>{{ tranlates["score"] }}: 0 </span>
                             </div>
                         </div>
                         <div class="space clearfix"></div>
                         <span class="signature">
-                        “
-
-                        这家伙很懒，什么个性签名都没有留下。
-
-                        ”
+                            {{ tranlates["signature"] }}
                         </span>
                     </div>
                 </div>
@@ -56,13 +52,14 @@
             <div class="header">
                 <a href="/topic"
                    class="topic-tab current-tab">
-                    全部的帖子
+                    {{ tranlates["all_topic"] }}
                 </a>
 
                 {% for b in bs %}
                 <a href="/topic?board_id={{ b.id }}"
                    class="topic-tab current-tab">
-                    {{ b.title }}
+{#                    {{ b.title }}#}
+                {{ tranlates[b.title]  }}
                 </a>
                 {% endfor %}
             </div>
@@ -77,7 +74,7 @@
                             <span>{{ t.replies() | count }} / {{ t.views }}</span>
                             <!--<a class="topic_title" href="{{ url_for('topic.delete', id=t.id) }}">-->
                             <a class="topic_title" href="{{ url_for('topic.delete', id=t.id, token=token) }}">
-                                删除
+                                {{ tranlates['delete']  }}
                             </a>
 
                         </div>

@@ -1,5 +1,6 @@
 import time
 
+import redis
 from flask import (
     render_template,
     request,
@@ -7,7 +8,7 @@ from flask import (
     url_for,
     Blueprint,
     jsonify,
-)
+    json)
 
 from models.blog import Blog
 from models.blog_comment import BlogComment
@@ -15,13 +16,15 @@ from routes import blog_owner_required, blog_comment_owner_required, current_use
     csrf_required
 
 main = Blueprint('blog', __name__)
-
+cache = redis.StrictRedis()
 
 @main.route('/new')
 def new():
     token = new_csrf_token()
     u = current_user()
-    return render_template('/blog/blog_new.html', user=u, token=token)
+    v = cache.get("site_translate_list").decode('utf-8')
+    tranlates = json.loads(v)
+    return render_template('/blog/blog_new.html', user=u, token=token, tranlates=tranlates)
 
 
 # 删除功能：
@@ -81,7 +84,9 @@ def detail():
     diff = now_time - int(blog.created_time)
     diff = round(diff / 60 / 60)
 
-    return render_template('blog/blog_detail.html', blog=blog, comments=comments, user=u, token=token, time=diff)
+    v = cache.get("site_translate_list").decode('utf-8')
+    tranlates = json.loads(v)
+    return render_template('blog/blog_detail.html', blog=blog, comments=comments, user=u, token=token, time=diff, tranlates=tranlates)
 
 
 @main.route('/index')
@@ -93,8 +98,10 @@ def index():
     u = current_user()
     # blogs = Blog.all(user_id=u.id)
     blogs = Blog.all()
+    v = cache.get("site_translate_list").decode('utf-8')
+    tranlates = json.loads(v)
     # 替换模板文件中的标记字符串
-    return render_template('blog/blog_index.html', blogs=blogs, user=u)
+    return render_template('blog/blog_index.html', blogs=blogs, user=u, tranlates=tranlates)
 
 
 @main.route('/update', methods=['POST'])

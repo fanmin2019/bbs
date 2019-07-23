@@ -8,12 +8,16 @@ from flask import (
     Blueprint,
 )
 
+import json
+
+from models.language import Language
 from routes import *
 
 from models.topic import Topic
 from models.board import Board
 
 main = Blueprint('topic', __name__)
+cache = redis.StrictRedis()
 
 
 @main.route("/")
@@ -25,21 +29,48 @@ def index():
         ms = Topic.all()
     else:
         ms = Topic.all(board_id=board_id)
+
+    if cache.exists("user_language"):
+        language = cache.get("user_language")
+        l = language.decode()
+    else:
+        l = 'en'
+
+    ls = Language.all(language=l)
+    tranlates = {
+
+    }
+
+    # if cache.exists("site_translate_list"):
+    #     tranlates = cache.get("site_translate_list").decode()
+    # else:
+    for one in ls:
+        print(one)
+        tranlates[one.filedName] = one.labelName
+    # print("redisにはないので、DBから取得")
+    v = json.dumps(tranlates)
+    # cache.set(k, v)
+    cache.set("site_translate_list", v)
+
     token = new_csrf_token()
     bs = Board.all()
-    return render_template("topic/index.html", ms=ms, token=token, bs=bs, bid=board_id, user=u)
+    # return render_template("topic/index.html", ms=ms, token=token, bs=bs, bid=board_id, user=u)
+    return render_template("topic/index.html", ms=ms, token=token, bs=bs, bid=board_id, user=u, tranlates=tranlates)
 
 
 @main.route('/<int:id>')
 @login_required
 def detail(id):
+
+    v = cache.get("site_translate_list").decode('utf-8')
+    tranlates = json.loads(v)
     m = Topic.get(id)
     now_time = int(time.time())
     diff = now_time - int(m.created_time)
     diff = round(diff / 60 / 60)
     u = current_user()
     # 传递 topic 的所有 reply 到 页面中
-    return render_template("topic/detail.html", topic=m, user=u, time=diff)
+    return render_template("topic/detail.html", topic=m, user=u, time=diff, tranlates=tranlates)
 
 
 @main.route("/delete")
@@ -60,7 +91,9 @@ def new():
     bs = Board.all()
     # return render_template("topic/new.html", bs=bs, bid=board_id)
     token = new_csrf_token()
-    return render_template("topic/new.html", bs=bs, token=token, bid=board_id)
+    v = cache.get("site_translate_list").decode('utf-8')
+    tranlates = json.loads(v)
+    return render_template("topic/new.html", bs=bs, token=token, bid=board_id, tranlates=tranlates)
 
 
 @main.route("/add", methods=["POST"])

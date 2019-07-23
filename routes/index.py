@@ -1,6 +1,8 @@
 import os
 import time
 import uuid
+import lang
+
 
 from flask import (
     render_template,
@@ -22,13 +24,10 @@ from models.user import User
 from routes import login_required, current_user
 
 import json
-
 import redis
-
-cache = redis.StrictRedis()
-
 from utils import log
 
+cache = redis.StrictRedis()
 main = Blueprint('index', __name__)
 
 """
@@ -43,6 +42,8 @@ main = Blueprint('index', __name__)
 
 @main.route("/")
 def index():
+    # form = request.form.to_dict()
+    # print("login form", form)
     u = current_user()
     if u is None:
         return render_template("index.html")
@@ -75,6 +76,12 @@ def login():
         session['user_id'] = u.id
         # 设置 cookie 有效期为 永久
         # session.permanent = True
+
+        # 把语言作为一个全局的变量给保存起来
+        # 但是仍然有一个问题就是页面里面那么多字句，要怎样实现替换呢
+        # 我希望传给jinjia一组字典，然后金甲自己来判断
+        language = form['language']
+        cache.set("user_language", language)
         # 转到 topic.index 页面
         return redirect(url_for('topic.index'))
 

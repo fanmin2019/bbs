@@ -23,8 +23,8 @@
     <fieldset>
         <textarea autofocus class='span9' id='title'
                   name='title' rows='1'
-                  placeholder="标题字数 10 字以上"></textarea>
-        <span class="tab-selector">选择版块：</span>
+                  placeholder="{{ tranlates["title_more_than_10"] }}"></textarea>
+        <span class="tab-selector">{{ tranlates["choose_board"] }}：</span>
         <select name="board_id" id="board" required>
             {% for b in bs %}
                 {% if bid == b.id %}
@@ -36,7 +36,7 @@
         </select>
         <div class='markdown_editor in_editor'>
           <div class='markdown_in_editor'>
-            <textarea class='editor' name='content' rows='20' placeholder='文章支持 Markdown 语法, 请注意标记代码'></textarea>
+            <textarea class='editor' name='content' rows='20' placeholder='{{ tranlates["markdown_note"] }}'></textarea>
             <div class='editor_buttons'>
               <input type="submit" class='span-primary submit_btn' data-loading-text="提交中" value="提交">
             </div>

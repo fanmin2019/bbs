@@ -16,6 +16,7 @@ var markContents = function () {
     }
 }
 
+
 var highlight = function () {
     var code_list = es('pre code')
     for (var i = 0; i < code_list.length; i++) {

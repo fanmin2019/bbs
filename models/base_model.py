@@ -36,6 +36,11 @@ class SQLMixin(object):
         db.session.commit()
 
     @classmethod
+    def deleteall(cls):
+        db.session.query(cls).delete()
+        db.session.commit()
+
+    @classmethod
     def all(cls, **kwargs):
         ms = cls.query.filter_by(**kwargs).all()
         return ms
@@ -97,4 +102,3 @@ if __name__ == '__main__':
     print(u)
     u = SimpleUser.one(username='123')
     print(u)
-
