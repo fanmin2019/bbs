@@ -23,8 +23,8 @@ def configured_app():
     # 这个字符串随便你设置什么内容都可以
     app.secret_key = secret.secret_key
     # 现在 mysql root 默认用 socket 来验证而不是密码
-    uri = 'mysql+pymysql://root@127.0.0.1/bbs?charset=utf8mb4&unix_socket=/var/run/mysqld/mysqld.sock'
-    # uri = 'mysql+pymysql://root:test@127.0.0.1/bbs'
+    # uri = 'mysql+pymysql://root@127.0.0.1/bbs?charset=utf8mb4&unix_socket=/var/run/mysqld/mysqld.sock'
+    uri = 'mysql+pymysql://root:test@127.0.0.1/bbs'
     app.config['SQLALCHEMY_DATABASE_URI'] = uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
