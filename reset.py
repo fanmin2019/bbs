@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 
-#import secret
+import secret
 from app import configured_app
 from models.base_model import db
 from models.blog import Blog
@@ -14,7 +14,8 @@ from models.language import Language
 
 def reset_database():
     # 现在 mysql root 默认用 socket 来验证而不是密码
-    uri = 'mysql+pymysql://root@127.0.0.1/?charset=utf8mb4&unix_socket=/var/run/mysqld/mysqld.sock'
+    # uri = 'mysql+pymysql://root@127.0.0.1/?charset=utf8mb4&unix_socket=/var/run/mysqld/mysqld.sock'
+    uri = 'mysql+pymysql://root:{}@localhost/?charset=utf8mb4'.format(secret.database_password)
     # uri = 'mysql+pymysql://root:test@127.0.0.1'
     e = create_engine(uri, echo=True)
 
