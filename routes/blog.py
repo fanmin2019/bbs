@@ -1,5 +1,4 @@
-import time
-
+import datetime
 import redis
 from flask import (
     render_template,
@@ -80,9 +79,28 @@ def detail():
     comments = BlogComment.all(blog_id=blog_id)
     u = current_user()
     token = new_csrf_token()
-    now_time = int(time.time())
-    diff = now_time - int(blog.created_time)
-    diff = round(diff / 60 / 60)
+    # now_time = int(time.time())
+    now_time = datetime.datetime.now()
+    created_time = datetime.datetime.fromtimestamp(int(blog.created_time))
+    # print("blog_detail_now_time", now_time)
+    # diff = now_time - int(blog.created_time)
+    # seconds = round(diff / 60 / 60) #秒
+    delta = now_time - created_time
+    hours = round(delta.total_seconds() // 3600 - delta.days*24)
+    minutes = round((delta.total_seconds() % 3600) // 60)
+    seconds = round(delta.total_seconds() - minutes * 60)
+    if delta.days > 0:
+        diff = "{}日{}時間".format(delta.days, hours)
+    elif hours > 0 and delta.days <= 0:
+        # diff = delta.days + "時間" + delta.minutes + "分"
+        diff = "{}時間{}分".format(hours, minutes)
+    elif minutes > 0 and hours <= 0:
+        # diff = delta.minutes + "分" + delta.seconds + "秒"
+        diff = "{}分{}秒".format(minutes, seconds)
+    elif delta.minutes <= 0:
+        # diff = delta.seconds + "秒"
+        diff = "{}秒".format(delta.seconds)
+
 
     v = cache.get("site_translate_list").decode('utf-8')
     tranlates = json.loads(v)

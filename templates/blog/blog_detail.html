@@ -50,10 +50,12 @@
 {#        	        </span>#}
                 </div>{#div for changes#}
             </div>{#div for topic_header#}
-            <div class='header topic_header'>
-                    <input class="span-primary submit_btn" type="button" id="id-edit-btn" value="{{ tranlates["edit"] }}">
-                    <input class="span-primary submit_btn" type="button" id="id-delete-btn" value="{{ tranlates["delete"] }}">
-            </div>
+            {% if user.username != 'guest' %}
+                <div class='header topic_header'>
+                        <input class="span-primary submit_btn" type="button" id="id-edit-btn" value="{{ tranlates["edit"] }}">
+                        <input class="span-primary submit_btn" type="button" id="id-delete-btn" value="{{ tranlates["delete"] }}">
+                </div>
+            {% endif %}
             <div class='inner topic'>
                 <div class='topic_content'>
                     <div id="id-markdown-text" class="markdown-text">{{ blog.content}}
@@ -83,12 +85,14 @@
             </span>
         </div>
         <div id="id-blog-comment" data-id="{{ blog.id }}">
+        {% if user.username != 'guest' %}
             <form class="pure-form pure-form-stacked"  action="{{ url_for('blog.comment_add', token=token) }}" method="post">
                 <textarea name="content" id="" cols="400" rows="2" style="margin: 0px 0px 5px; width: 980px; height: 60px;"></textarea>
                 <input type="hidden" name="blog_id" value="{{ blog.id  }}">
 {#                <button type="submit">添加评论</button>#}
                 <input class="span-primary submit_btn" id="id-update-btn" type="submit" value="{{ tranlates["add_comment"] }}">
             </form>
+        {% endif %}
         {% for c in comments %}
 {#            {% set u = user %}#}
             <div class='cell reply_area reply_item'>

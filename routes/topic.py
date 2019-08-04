@@ -1,4 +1,5 @@
 import time
+import datetime
 
 from flask import (
     render_template,
@@ -69,6 +70,25 @@ def detail(id):
     diff = now_time - int(m.created_time)
     diff = round(diff / 60 / 60)
     u = current_user()
+
+    now_time = datetime.datetime.now()
+    created_time = datetime.datetime.fromtimestamp(int(m.created_time))
+    delta = now_time - created_time
+    hours = round(delta.total_seconds() // 3600 - delta.days * 24)
+    minutes = round((delta.total_seconds() % 3600) // 60)
+    seconds = round(delta.total_seconds() - minutes * 60)
+    if delta.days > 0:
+        diff = "{}日{}時間".format(delta.days, hours)
+    elif hours > 0 and delta.days <= 0:
+        # diff = delta.days + "時間" + delta.minutes + "分"
+        diff = "{}時間{}分".format(hours, minutes)
+    elif minutes > 0 and hours <= 0:
+        # diff = delta.minutes + "分" + delta.seconds + "秒"
+        diff = "{}分{}秒".format(minutes, seconds)
+    elif delta.minutes <= 0:
+        # diff = delta.seconds + "秒"
+        diff = "{}秒".format(delta.seconds)
+
     # 传递 topic 的所有 reply 到 页面中
     return render_template("topic/detail.html", topic=m, user=u, time=diff, tranlates=tranlates)
 

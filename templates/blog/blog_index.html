@@ -9,6 +9,7 @@
 {#    {% endfor %}#}
     <div id="main">
         <div id="sidebar">
+            {% if user.username != 'guest' %}
             <div class="panel">
                 <div class="inner">
                     <a href="/blog/new" class="create_topic_btn">
@@ -16,6 +17,32 @@
                     </a>
                 </div>  {#for inner#}
             </div>  {#for panel#}
+            {% endif %}
+            <div class='panel'>
+                <div class='header'>
+                    <span class='col_fade'>{{ tranlates["profile"] }}</span>
+                </div>
+                <div class='inner'>
+                    <div class='user_card'>
+                        <div>
+                            <a class='user_avatar' href="/profile?username={{ user.username }}">
+                                <img src="{{ user.image }}" title="{{ user.username }}"/>
+                            </a>
+                            <span class='user_name'><a class='dark' href="/profile?username={{ user.username }}">{{ user.username }}</a></span>
+
+                            <div class='board clearfix'>
+                                <div class='floor'>
+                                    <span class='big'>{{ tranlates["score"] }}: 0 </span>
+                                </div>
+                            </div>
+                            <div class="space clearfix"></div>
+                            <span class="signature">
+                                {{ tranlates["signature"] }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>  {#for sidebar#}
         <div id="content">
             <div class="panel">

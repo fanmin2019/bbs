@@ -13,6 +13,7 @@
 {% block main %}
 <div id="main">
     <div id="sidebar">
+        {% if user.username != 'guest' %}
         <div class="panel">
             <div class="inner">
                 <a href="/topic/new?board_id={{ bid }}" class="create_topic_btn">
@@ -20,6 +21,7 @@
                 </a>
             </div>
         </div>
+        {% endif %}
         <div class='panel'>
             <div class='header'>
                 <span class='col_fade'>{{ tranlates["profile"] }}</span>
@@ -72,10 +74,12 @@
                                 {{ t.title }}
                             </a>
                             <span>{{ t.replies() | count }} / {{ t.views }}</span>
+                            {% if user.username != 'guest' %}
                             <!--<a class="topic_title" href="{{ url_for('topic.delete', id=t.id) }}">-->
                             <a class="topic_title" href="{{ url_for('topic.delete', id=t.id, token=token) }}">
                                 {{ tranlates['delete']  }}
                             </a>
+                            {% endif %}
 
                         </div>
                     </div>

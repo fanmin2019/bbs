@@ -107,9 +107,10 @@
 {#        </div>#}
     <div class="panel">
     <div class="header">
-      <span class="col_fade">{{ tranlates["add_reply"] }}</span>
     </div>
-        <div class="inner reply">
+        {% if user.username != 'guest' %}
+            <span class="col_fade">{{ tranlates["add_reply"] }}</span>
+            <div class="inner reply">
           <form id="reply_form" action="{{ url_for('reply.add') }}" method="post">
 
             <div class="markdown_editor in_editor">
@@ -123,6 +124,7 @@
             </div>
           </form>
         </div>
+        {% endif %}
   </div>
     </div>
     </div>
