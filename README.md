@@ -8,6 +8,7 @@
     - Force token authentication of requests, to protect the site from usual network attacks such as XSS, CSRF attacks etc.
     - Redirect the access from http url redirect to https url automatically
     - With scripts for auto deployment of this web application
+    - Multi language support using redis to cache the translation.
     
 - **Screenshots**
 ![alt](https://github.com/fanmin2019/bbs/blob/master/screenshots/login.png)
