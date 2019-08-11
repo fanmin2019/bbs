@@ -1,4 +1,5 @@
 import datetime
+import ast
 import redis
 from flask import (
     render_template,
@@ -79,12 +80,8 @@ def detail():
     comments = BlogComment.all(blog_id=blog_id)
     u = current_user()
     token = new_csrf_token()
-    # now_time = int(time.time())
     now_time = datetime.datetime.now()
     created_time = datetime.datetime.fromtimestamp(int(blog.created_time))
-    # print("blog_detail_now_time", now_time)
-    # diff = now_time - int(blog.created_time)
-    # seconds = round(diff / 60 / 60) #秒
     delta = now_time - created_time
     hours = round(delta.total_seconds() // 3600 - delta.days*24)
     minutes = round((delta.total_seconds() % 3600) // 60)
@@ -100,7 +97,6 @@ def detail():
     elif delta.minutes <= 0:
         # diff = delta.seconds + "秒"
         diff = "{}秒".format(delta.seconds)
-
 
     v = cache.get("site_translate_list").decode('utf-8')
     tranlates = json.loads(v)
@@ -134,7 +130,21 @@ def update():
     content = form['content']
     print("content", content)
     Blog.update(blog_id, content=content)
-    return redirect(url_for('blog.detail', id=blog_id))
+    return redirect(url_for('blog.detail', id=blog_id))@main.route('/update', methods=['POST'])
+
+
+@main.route('/api/update_title', methods=['POST'])
+@login_required
+def update_title():
+    form_str = request.data.decode()
+    form = ast.literal_eval(form_str)
+    blog_id = int(form['id'])
+    title = form['title']
+    Blog.update(blog_id, title=title)
+    d = dict(
+        message="成功"
+    )
+    return jsonify(d)
 
 
 @main.route('/comment/add', methods=['POST'])

@@ -52,11 +52,36 @@ var bindUpdateEvent = function () {
         }
 }
 
+var apiTodoAdd = function(form, callback) {
+    var path = '/blog/api/update_title'
+    ajax('POST', path, form, callback)
+}
+
+
 var __main = function () {
     // markContents()
     // registerTimer()
     // highlight()
     bindUpdateEvent()
+
+    var title = e('.topic_full_title')
+    title.addEventListener('blur', function () {
+       log("edit end")
+        var title = e('.topic_full_title').innerText
+        log('click add', title)
+        var id = e('input[name="id"]').value
+        log("id", id)
+        var form = {
+            id: id,
+            title: title,
+        }
+        apiTodoAdd(form, function(todo) {
+            // 收到返回的数据, 插入到页面中
+            //insertTodo(todo)
+            console.log(todo)
+        })
+
+    })
 }
 
 
