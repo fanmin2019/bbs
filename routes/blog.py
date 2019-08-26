@@ -130,7 +130,7 @@ def update():
     content = form['content']
     print("content", content)
     Blog.update(blog_id, content=content)
-    return redirect(url_for('blog.detail', id=blog_id))@main.route('/update', methods=['POST'])
+    return redirect(url_for('blog.detail', id=blog_id))
 
 
 @main.route('/api/update_title', methods=['POST'])
@@ -140,7 +140,7 @@ def update_title():
     form = ast.literal_eval(form_str)
     blog_id = int(form['id'])
     title = form['title']
-    Blog.update(blog_id, title=title)
+    Blog.update(blog_id, tlitle=title)
     d = dict(
         message="成功"
     )
