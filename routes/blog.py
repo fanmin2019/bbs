@@ -18,6 +18,7 @@ from routes import blog_owner_required, blog_comment_owner_required, current_use
 main = Blueprint('blog', __name__)
 cache = redis.StrictRedis()
 
+
 @main.route('/new')
 def new():
     token = new_csrf_token()
@@ -103,15 +104,18 @@ def detail():
     return render_template('blog/blog_detail.html', blog=blog, comments=comments, user=u, token=token, time=diff, tranlates=tranlates)
 
 
-@main.route('/index')
+@main.route('/index',methods=['GET'], defaults={"page": 1})
+@main.route('/index/<int:page>', methods=['GET'])
 @login_required
-def index():
-    """
-    weibo 首页的路由函数
-    """
+def index(page):
     u = current_user()
     # blogs = Blog.all(user_id=u.id)
-    blogs = Blog.all()
+    # blogs = Blog.all()
+    page = page
+    per_page = 2
+    blogs = Blog.query.paginate(page, per_page, error_out=False)
+    # for pp in blogs.iter_pages():
+    #     print(pp)
     v = cache.get("site_translate_list").decode('utf-8')
     tranlates = json.loads(v)
     # 替换模板文件中的标记字符串
@@ -122,7 +126,6 @@ def index():
 @login_required
 # @blog_owner_required
 def update():
-    print("wahaha")
     jsonify("log update start")
     form = request.form
     blog_id = int(form['id'])
