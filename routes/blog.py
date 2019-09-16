@@ -112,7 +112,7 @@ def index(page):
     # blogs = Blog.all(user_id=u.id)
     # blogs = Blog.all()
     page = page
-    per_page = 2
+    per_page = 10
     blogs = Blog.query.paginate(page, per_page, error_out=False)
     # for pp in blogs.iter_pages():
     #     print(pp)
