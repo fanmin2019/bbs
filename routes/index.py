@@ -49,7 +49,7 @@ def index():
     if u is None:
         return render_template("index.html")
     else:
-        return redirect(url_for('topic.index'))
+        return redirect(url_for('blog.index'))
 
 
 @main.route("/register", methods=['POST'])
@@ -84,7 +84,7 @@ def login():
         language = form['language']
         cache.set("user_language", language)
         # 转到 topic.index 页面
-        return redirect(url_for('topic.index'))
+        return redirect(url_for('blog.index'))
 
 
 @main.route("/signout", methods=['GET'])
