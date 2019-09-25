@@ -41,15 +41,15 @@ var registerTimer = function () {
 
 var bindUpdateEvent = function () {
     var edit_btn = document.getElementById("id-edit-btn")
-        edit_btn.onclick = function (event) {
-            console.log("clicked")
-            document.getElementById("id-markdown-text").style.display = 'none'
-            document.getElementById("id-edit-text").style.display = 'block'
-            document.getElementById("id-edit-btn").style.display = 'none'
-            document.getElementById("id-delete-btn").style.display = 'none'
-            document.getElementById("id-update-btn").style.display = 'block'
+    edit_btn.onclick = function (event) {
+        console.log("clicked")
+        document.getElementById("id-markdown-text").style.display = 'none'
+        document.getElementById("id-edit-text").style.display = 'block'
+        document.getElementById("id-edit-btn").style.display = 'none'
+        document.getElementById("id-delete-btn").style.display = 'none'
+        document.getElementById("id-update-btn").style.display = 'block'
 
-        }
+    }
 }
 
 var apiTodoAdd = function(form, callback) {
@@ -57,12 +57,37 @@ var apiTodoAdd = function(form, callback) {
     ajax('POST', path, form, callback)
 }
 
+var apiTodoDelete = function(form, callback) {
+    var path = '/blog/api/delete'
+    ajax('POST', path, form, callback)
+}
+
+var bindDeleteEvent = function () {
+    var delete_btn = document.getElementById("id-delete-btn")
+    delete_btn.onclick = function(event) {
+        if(window.confirm("Are you sure?")) {
+            var id = e('input[name="id"]').value
+            log("id", id)
+            var form = {
+                id: id
+            }
+            apiTodoDelete(form, function(res) {
+                alert(res.message)
+                location.href = "/"
+            })
+
+        }
+
+    }
+
+}
 
 var __main = function () {
     // markContents()
     // registerTimer()
     // highlight()
     bindUpdateEvent()
+    bindDeleteEvent()
 
     var title = e('.topic_full_title')
     title.addEventListener('blur', function () {

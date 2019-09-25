@@ -48,6 +48,21 @@ def delete():
     return jsonify(d)
 
 
+@main.route('/api/delete', methods=['POST'])
+@login_required
+def api_delete():
+    form_str = request.data.decode()
+    form = ast.literal_eval(form_str)
+    blog_id = int(form['id'])
+    print("delete blog_id", blog_id)
+    Blog.delete(id=blog_id)
+    BlogComment.delete_all(blog_id)
+    d = dict(
+        message="成功删除 blog"
+    )
+    return jsonify(d)
+
+
 @main.route('/comment/delete')
 @blog_comment_owner_required
 def delete_comment():

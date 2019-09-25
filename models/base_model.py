@@ -38,6 +38,12 @@ class SQLMixin(object):
     @classmethod
     def deleteall(cls):
         db.session.query(cls).delete()
+        db.session.commit()    \
+
+
+    @classmethod
+    def delete(cls, **kwargs):
+        db.session.query(cls).filter_by(**kwargs).delete()
         db.session.commit()
 
     @classmethod
