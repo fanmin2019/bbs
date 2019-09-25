@@ -64,30 +64,30 @@
                             </div>
                             {% endfor %}
                 </div>{#for topic_list#}
-                <div class="pagination" current_page="1">
-                  <ul>
-                      {% if blogs.has_prev %}
-                          <li><a href="{{ url_for('blog.index', page=blogs.prev_num) }}">«</a></li>
-                      {% else %}
-                          <li class="disabled"><a>«</a></li>
-                      {% endif %}
-                      {%- for page in blogs.iter_pages() %}
-                        {% if page %}
-                          {% if page != blogs.page %}
-                              <li><a href="{{ url_for('blog.index', page=page) }}">{{ page }}</a></li>
-                          {% else %}
-                            <li class="disabled active"><a>{{ page }}</a></li>
-                          {% endif %}
-                        {% endif %}
-                      {%- endfor %}
-                    {% if blogs.has_next %}
-                        <li><a href="{{ url_for('blog.index', page=blogs.next_num) }}">»</a></li>
-                    {% else %}
-                        <li  class="disabled active"><a href="#">»</a></li>
-                    {% endif %}
-                  </ul>
-                </div>
-            </div>{#for inner#}
+    <div class="pagination" current_page="1">
+      <ul>
+          {% if blogs.has_prev %}
+              <li><a href="{{ url_for('blog.index', page=blogs.prev_num) }}">«</a></li>
+          {% else %}
+              <li class="disabled"><a>«</a></li>
+          {% endif %}
+          {%- for page in blogs.iter_pages() %}
+            {% if page %}
+              {% if page != blogs.page %}
+                  <li><a href="{{ url_for('blog.index', page=page) }}">{{ page }}</a></li>
+              {% else %}
+                <li class="disabled active"><a>{{ page }}</a></li>
+              {% endif %}
+            {% endif %}
+          {%- endfor %}
+        {% if blogs.has_next %}
+            <li><a href="{{ url_for('blog.index', page=blogs.next_num) }}">»</a></li>
+        {% else %}
+            <li  class="disabled active"><a href="#">»</a></li>
+        {% endif %}
+      </ul>
+    </div>
+</div>{#for inner#}
 
             </div> {#for panel#}
         </div> {#for content#}

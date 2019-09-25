@@ -39,7 +39,7 @@
                 </span>
                 <div class="changes">
                     <span>
-                        {{ tranlates["publish"] }} {{ time }} {{ tranlates["ago"] }}
+                        {{ time }}
                     </span>
                     <span>
 {#                        {% set u = blog.user() %}#}
@@ -168,9 +168,26 @@
 
     }
 
+    var addLink = function () {
+        var selection = window.getSelection();
+        var pagelink = ". 原文出自[Change before you have to] 转载请保留原文链接: " + document.location.href;
+        var  copytext = selection + pagelink;
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        document.body.appendChild(newdiv);
+        newdiv.innerHTML = copytext;
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {
+            document.body.removeChild(newdiv);
+        }, 100);
+    }
+
+
     var __main = function () {
         markContents()
         highlight()
+        document.oncopy = addLink;
     }
 
     __main()
