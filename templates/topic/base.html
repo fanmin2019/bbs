@@ -5,9 +5,18 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/index.min.23a5b1ca.min.css" media="all">
+{#    <link rel="stylesheet" href="//static2.cnodejs.org/public/stylesheets/index.min.23a5b1ca.min.css" media="all">#}
+{#    <script async="" src="https://www.google-analytics.com/analytics.js"></script>#}
+{#    <script src="//static2.cnodejs.org/public/index.min.f7c13f64.min.js"></script>#}
     <link rel="icon" href="/images/favicon.ico">
 {#   <script src="lang.js"></script>#}
 <head>
+<head>
+  <!-- scripts -->
+
+</head>
+
 <body>
 
 <!-- navbar -->
@@ -17,6 +26,9 @@
         <a class="brand" href="/">
           <img src="/static/pics/pic1.png">
         </a>
+        <form id="search_form" class="navbar-search" action="/search">
+         <input type="text" id="q" name="q" class="search-query span3" value="">
+        </form>
       <ul class='nav pull-right'>
         <li><a href='/'>{{ tranlates["homepage"] }}</a></li>
         <li><a href="/blog/index">{{ tranlates["blog"] }}</a></li>
