@@ -9,6 +9,7 @@ from flask import (
     Blueprint,
     jsonify,
     json)
+from flask_sqlalchemy import Pagination
 
 from models.blog import Blog
 from models.blog_comment import BlogComment
@@ -28,6 +29,21 @@ def new():
     return render_template('/blog/blog_new.html', user=u, token=token, tranlates=tranlates)
 
 
+@main.route('/search')
+def search():
+    # print("検索画面IN")
+    u = current_user()
+    question = request.args['question']
+    # print('show zquestion', question)
+    q = "%{}%".format(question)
+    blogs = Blog.query.filter(Blog.content.like(q)).paginate(1, 10)
+    print("blog", blogs)
+    # paginated = Pagination(blogs, page=page, per_page=10)
+    v = cache.get("site_translate_list").decode('utf-8')
+    tranlates = json.loads(v)
+    # 替换模板文件中的标记字符串
+    return render_template('blog/blog_index.html', blogs=blogs, user=u, tranlates=tranlates)
+
 # 删除功能：
 # 有一个删除按钮
 # 按下之后，首先要判断是不是这个博客的所有者
@@ -38,7 +54,7 @@ def new():
 @blog_owner_required
 def delete():
     print("blog delete start")
-    blog_id = int(request.args['id'])
+    blog_id = request.args['question']
     print("delete blog_id", blog_id)
     Blog.delete(blog_id)
     BlogComment.delete_all(blog_id)
@@ -120,7 +136,7 @@ def detail():
     return render_template('blog/blog_detail.html', blog=blog, comments=comments, user=u, token=token, time=created_time, tranlates=tranlates)
 
 
-@main.route('/index',methods=['GET'], defaults={"page": 1})
+@main.route('/index', methods=['GET'], defaults={"page": 1})
 @main.route('/index/<int:page>', methods=['GET'])
 @login_required
 def index(page):
